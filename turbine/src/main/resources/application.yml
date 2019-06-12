@@ -1,0 +1,35 @@
+server:
+  port: 8302
+spring:
+  cloud:
+    stream:
+      bindings:
+        input:
+          destination: hystrixStreamOutput
+          binder: kafka1
+        output:
+          destination: turbineStreamInput
+          binder: kafka1
+        turbineStreamInput:
+          destination: hystrixStreamOutput
+          binder: kafka1
+      binders:
+        kafka1:
+          type: kafka
+          environment:
+            spring:
+              cloud:
+                stream:
+                  kafka:
+                    binder:
+                      brokers: ["192.168.32.201:9091","192.168.32.201:9092","192.168.32.201:9093"]
+                      zkNodes: 192.168.32.201:2181
+      default-binder: kafka1
+  application:
+    name: turbine
+
+
+#turbine:
+#  stream:
+#    destination: hystrixStreamOutput
+#    enabled: true

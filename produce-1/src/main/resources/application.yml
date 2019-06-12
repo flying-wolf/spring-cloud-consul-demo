@@ -1,0 +1,47 @@
+server:
+  port: 8201
+spring:
+  cloud:
+    consul:
+      enabled: true
+      port: 8500
+      host: localhost
+      discovery:
+        enabled: true
+        prefer-ip-address: true
+        register: true
+        service-name: ${spring.application.name}
+#        instance-group: consumer-group
+#        instance-zone: cn
+        tags: name=produce-1
+#        fail-fast: true
+#        acl-token: ''
+#        datacenters:
+
+#    stream:
+#      kafka:
+#        binder:
+#          brokers: ["192.168.32.201:9091","192.168.32.201:9092","192.168.32.201:9093"]
+#          auto-create-topics: true
+#          transaction:
+#            producer:
+#              error-channel-enabled: true
+#          replication-factor: 3
+  application:
+    name: produce-1
+
+
+feign:
+  okhttp:
+    enabled: true
+  httpclient:
+    connection-timeout: 1000
+
+  hystrix:
+    enabled: false
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: FULL
